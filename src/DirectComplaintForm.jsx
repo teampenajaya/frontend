@@ -23,7 +23,7 @@ const DirectComplaintForm = () => {
   // Validasi form
   const validateForm = () => {
     const newErrors = {};
-
+    
     // Username validation
     if (!formData.username.trim()) {
       newErrors.username = "Username wajib diisi";
@@ -32,7 +32,7 @@ const DirectComplaintForm = () => {
     } else if (!/^[a-zA-Z0-9_]+$/.test(formData.username)) {
       newErrors.username = "Username hanya boleh mengandung huruf, angka, dan underscore";
     }
-
+    
     // Email validation
     if (!formData.email.trim()) {
       newErrors.email = "Email wajib diisi";
@@ -41,26 +41,26 @@ const DirectComplaintForm = () => {
     } else if (formData.email.length > 100) {
       newErrors.email = "Email terlalu panjang (maksimal 100 karakter)";
     }
-
+    
     // Game ID validation (optional)
     if (formData.gameId && (!/^[a-zA-Z0-9-_]+$/.test(formData.gameId) || formData.gameId.length > 50)) {
       newErrors.gameId = "ID Game tidak valid, hanya huruf, angka, tanda hubung dan underscore";
     }
-
+    
     // Issue type validation
     if (!formData.issueType) {
       newErrors.issueType = "Jenis masalah wajib dipilih";
     } else if (!issueTypes.includes(formData.issueType)) {
       newErrors.issueType = "Jenis masalah tidak valid";
     }
-
+    
     // Description validation
     if (!formData.description.trim()) {
       newErrors.description = "Deskripsi wajib diisi";
     } else if (formData.description.length > 2000) {
       newErrors.description = "Deskripsi terlalu panjang (maksimal 2000 karakter)";
     }
-
+    
     // Date validation
     if (!formData.dateOfIssue) {
       newErrors.dateOfIssue = "Tanggal masalah wajib diisi";
@@ -73,7 +73,7 @@ const DirectComplaintForm = () => {
         newErrors.dateOfIssue = "Tanggal tidak boleh di masa depan";
       }
     }
-
+    
     // Phone number validation
     if (!formData.phoneNumber.trim()) {
       newErrors.phoneNumber = "Nomor telepon wajib diisi";
@@ -88,19 +88,19 @@ const DirectComplaintForm = () => {
   // Handle perubahan input
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+    
     // Reset server errors when user makes changes
     if (serverErrors) {
       setServerErrors(null);
     }
-
+    
     // Special handling for phone number to ensure it's numeric
     if (name === "phoneNumber") {
       // Allow only numbers and '+' at the beginning
       const sanitizedValue = value.replace(/[^0-9+]/g, "");
       // Ensure '+' only appears at the beginning
-      const formattedValue = sanitizedValue.replace(/\+/g, (match, offset) => (offset === 0 ? match : ""));
-
+      const formattedValue = sanitizedValue.replace(/\+/g, (match, offset) => offset === 0 ? match : '');
+      
       setFormData((prev) => ({
         ...prev,
         [name]: formattedValue,
@@ -124,7 +124,7 @@ const DirectComplaintForm = () => {
       try {
         const response = await fetch(`https://backend-iql1.onrender.com/send-complaint`, {
           method: "POST",
-          headers: {
+          headers: { 
             "Content-Type": "application/json",
             // Add CSRF token if you implement it
             // "X-CSRF-Token": csrfToken,
@@ -142,11 +142,11 @@ const DirectComplaintForm = () => {
           if (result.errors) {
             setErrors(result.errors);
           } else {
-            throw new Error(result.message || "Gagal mengirim pengaduan");
+            throw new Error(result.message || "Gagal mengirim keluhan");
           }
         }
       } catch (error) {
-        setServerErrors("Terjadi kesalahan saat mengirim pengaduan. Silakan coba lagi.");
+        setServerErrors("Terjadi kesalahan saat mengirim keluhan. Silakan coba lagi.");
       } finally {
         setIsSubmitting(false);
       }
@@ -174,7 +174,8 @@ const DirectComplaintForm = () => {
   return (
     <div className="bg-[#0f1923] text-white min-h-screen p-6">
       <div className="max-w-2xl mx-auto bg-[#161d27] rounded-lg shadow-lg p-6">
-        <h1 className="text-2xl font-bold text-yellow-400 mb-6 text-center">Laporan Pengaduan Pelanggan</h1>
+        <h1 className="text-2xl font-bold text-yellow-400 mb-6 text-center">Keluhan Member</h1>
+        <marquee direction="left" className="text-yellow-400 font-bold">Selamat datang di keluhan member</marquee>
 
         {/* Display server errors if any */}
         {serverErrors && (
@@ -190,15 +191,18 @@ const DirectComplaintForm = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h2 className="text-xl font-bold text-green-400 mb-2">Pengaduan Berhasil Dikirim!</h2>
-            <p className="text-gray-300 mb-6">Pengaduan Anda telah dikirim ke tim support. Kami akan segera menghubungi Anda.</p>
+            <h2 className="text-xl font-bold text-green-400 mb-2">Keluhan Berhasil Dikirim!</h2>
+            <p className="text-gray-300 mb-6">Keluhan Anda telah dikirim ke tim support. Kami akan segera menghubungi Anda.</p>
             <div className="bg-[#0d141d] p-4 rounded-lg mb-6 inline-block">
               <p className="text-yellow-400 font-bold">Nomor Referensi Anda:</p>
               <p className="text-white text-xl">{referenceNumber}</p>
               <p className="text-gray-400 text-sm mt-2">Simpan nomor ini untuk referensi Anda</p>
             </div>
-            <button onClick={resetForm} className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-6 rounded-lg transition duration-300">
-              Kirim Pengaduan Lain
+            <button 
+              onClick={resetForm} 
+              className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-6 rounded-lg transition duration-300"
+            >
+              Kirim Keluhan Lain
             </button>
           </div>
         ) : (
@@ -235,7 +239,7 @@ const DirectComplaintForm = () => {
                   onChange={handleChange}
                   maxLength={100}
                   className={`w-full bg-[#0d141d] border ${errors.email ? "border-red-500" : "border-gray-600"} rounded-lg p-3 text-white focus:outline-none focus:border-yellow-400`}
-                  placeholder="Alamat email Anda"
+                  placeholder="Alamat email aktif"
                 />
                 {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
               </div>
@@ -255,7 +259,7 @@ const DirectComplaintForm = () => {
                   onChange={handleChange}
                   maxLength={16} // +62 and 13 digits
                   className={`w-full bg-[#0d141d] border ${errors.phoneNumber ? "border-red-500" : "border-gray-600"} rounded-lg p-3 text-white focus:outline-none focus:border-yellow-400`}
-                  placeholder="contoh: +628123456789"
+                  placeholder="Contoh: +628123456789"
                 />
                 {errors.phoneNumber && <p className="text-red-500 text-sm mt-1">{errors.phoneNumber}</p>}
               </div>
@@ -273,7 +277,7 @@ const DirectComplaintForm = () => {
                   onChange={handleChange}
                   maxLength={50}
                   className={`w-full bg-[#0d141d] border ${errors.gameId ? "border-red-500" : "border-gray-600"} rounded-lg p-3 text-white focus:outline-none focus:border-yellow-400`}
-                  placeholder="ID Game"
+                  placeholder="ID Game (bisa dikosongkan)"
                 />
                 {errors.gameId && <p className="text-red-500 text-sm mt-1">{errors.gameId}</p>}
               </div>
@@ -311,7 +315,7 @@ const DirectComplaintForm = () => {
                   id="dateOfIssue"
                   name="dateOfIssue"
                   type="date"
-                  max={new Date().toISOString().split("T")[0]} // Prevents future dates
+                  max={new Date().toISOString().split('T')[0]} // Prevents future dates
                   value={formData.dateOfIssue}
                   onChange={handleChange}
                   className={`w-full bg-[#0d141d] border ${errors.dateOfIssue ? "border-red-500" : "border-gray-600"} rounded-lg p-3 text-white focus:outline-none focus:border-yellow-400`}
@@ -348,11 +352,12 @@ const DirectComplaintForm = () => {
                 </svg>
                 <div>
                   <p className="text-sm text-gray-300">
-                    Dengan mengisi formulir ini, masalah Anda akan segera diteruskan ke tim dukungan kami dan akan segera mendapatkan tanggapan.
-                    <br />
-                    Tim kami akan merespon melalui WhatsApp, silakan masukkan nomor WA yang valid.
+                    Dengan mengisi formulir ini, masalah Anda akan segera diteruskan ke tim dukungan kami dan akan segera mendapatkan tanggapan.<br/>
+                    Tim kami akan merespon melalui WhatsApp, silakan masukkan nomor WhatsApp yang valid.
                   </p>
-                  <p className="text-sm text-gray-300 mt-2">Keluhan Anda akan diberikan nomor referensi unik untuk pelacakan.</p>
+                  <p className="text-sm text-gray-300 mt-2">
+                    Keluhan Anda akan diberikan nomor referensi unik untuk pelacakan.
+                  </p>
                 </div>
               </div>
             </div>
@@ -371,7 +376,7 @@ const DirectComplaintForm = () => {
                   </div>
                 ) : (
                   <>
-                    <span className="relative z-10">Kirim Pengaduan</span>
+                    <span className="relative z-10">Kirim Keluhan</span>
                     <span className="absolute bottom-0 left-0 w-0 h-full bg-yellow-600 transition-all duration-300 group-hover:w-full -z-0"></span>
                   </>
                 )}
@@ -381,21 +386,13 @@ const DirectComplaintForm = () => {
         )}
         <div className="mt-8 text-sm text-gray-400 border-t border-gray-700 pt-4">
           <p className="font-bold text-yellow-400">Butuh Bantuan Segera?</p>
-          <p>
-            Untuk masalah mendesak, silakan hubungi kami langsung melalui Telegram:{" "}
-            <a href="https://t.me/lussypena">
-              <span className="text-yellow-400">@lussypena</span>
-            </a>
-          </p>
-          <p className="mt-2">
-            Bantuan Livechat: 24 Jam →{" "}
-            <a href="https://t.ly/livechattt" className="text-yellow-400">
-              Klik disini
-            </a>
-          </p>
+          <p>Untuk masalah mendesak, silakan hubungi kami langsung melalui Telegram: <a href="https://t.me/lussypena"><span className="text-yellow-400">@lussypena</span></a></p>
+          <p className="mt-2">Bantuan Livechat: 24 Jam → <a href="https://t.ly/livechattt" className="text-yellow-400">Klik disini</a></p>
+          <p className="text-yellow-400 text-center mt-6">&copy; {new Date().getFullYear()} PENASLOT. All rights reserved.</p>
         </div>
       </div>
     </div>
   );
 };
-export default DirectComplaintForm;
+
+export default DirectComplaintForm
