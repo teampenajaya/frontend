@@ -51,7 +51,7 @@ const DirectComplaintForm = () => {
       setIsSubmitting(true);
 
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/send-complaint`, {
+        const response = await fetch(`https://backend-iql1.onrender.com/send-complaint`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
@@ -114,126 +114,148 @@ const DirectComplaintForm = () => {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Input Username */}
-            <div>
-              <label className="block text-yellow-400 font-bold mb-2" htmlFor="username">
-                Username <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="username"
-                name="username"
-                type="text"
-                value={formData.username}
-                onChange={handleChange}
-                className={`w-full bg-[#0d141d] border ${errors.username ? "border-red-500" : "border-gray-600"} rounded-lg p-3 text-white focus:outline-none focus:border-yellow-400`}
-                placeholder="Username PENASLOT Anda"
-              />
-              {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Input Username */}
+              <div>
+                <label className="block text-yellow-400 font-bold mb-2" htmlFor="username">
+                  Username <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  value={formData.username}
+                  onChange={handleChange}
+                  className={`w-full bg-[#0d141d] border ${errors.username ? "border-red-500" : "border-gray-600"} rounded-lg p-3 text-white focus:outline-none focus:border-yellow-400`}
+                  placeholder="Username PENASLOT Anda"
+                />
+                {errors.username && <p className="text-red-500 text-sm mt-1">{errors.username}</p>}
+              </div>
+
+              {/* Input Email */}
+              <div>
+                <label className="block text-yellow-400 font-bold mb-2" htmlFor="email">
+                  Email <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className={`w-full bg-[#0d141d] border ${errors.email ? "border-red-500" : "border-gray-600"} rounded-lg p-3 text-white focus:outline-none focus:border-yellow-400`}
+                  placeholder="Alamat email Anda"
+                />
+                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+              </div>
             </div>
 
-            {/* Input Email */}
-            <div>
-              <label className="block text-yellow-400 font-bold mb-2" htmlFor="email">
-                Email <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                className={`w-full bg-[#0d141d] border ${errors.email ? "border-red-500" : "border-gray-600"} rounded-lg p-3 text-white focus:outline-none focus:border-yellow-400`}
-                placeholder="Alamat email Anda"
-              />
-              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Input Nomor Telepon */}
+              <div>
+                <label className="block text-yellow-400 font-bold mb-2" htmlFor="phoneNumber">
+                  Nomor WA Aktif <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  type="text"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                  className={`w-full bg-[#0d141d] border ${errors.phoneNumber ? "border-red-500" : "border-gray-600"} rounded-lg p-3 text-white focus:outline-none focus:border-yellow-400`}
+                  placeholder="Nomor WA Aktif"
+                />
+                {errors.phoneNumber && <p className="text-red-500 text-sm mt-1">{errors.phoneNumber}</p>}
+              </div>
+
+              {/* Input Game ID */}
+              <div>
+                <label className="block text-yellow-400 font-bold mb-2" htmlFor="gameId">
+                ID Game  (opsional)
+                </label>
+                <input
+                  id="gameId"
+                  name="gameId"
+                  type="text"
+                  value={formData.gameId}
+                  onChange={handleChange}
+                  className="w-full bg-[#0d141d] border border-gray-600 rounded-lg p-3 text-white focus:outline-none focus:border-yellow-400"
+                  placeholder="ID Game"
+                />
+              </div>
             </div>
 
-            {/* Input Nomor Telepon */}
-            <div>
-              <label className="block text-yellow-400 font-bold mb-2" htmlFor="phoneNumber">
-                Nomor Telepon <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="phoneNumber"
-                name="phoneNumber"
-                type="text"
-                value={formData.phoneNumber}
-                onChange={handleChange}
-                className={`w-full bg-[#0d141d] border ${errors.phoneNumber ? "border-red-500" : "border-gray-600"} rounded-lg p-3 text-white focus:outline-none focus:border-yellow-400`}
-                placeholder="Nomor telepon Anda"
-              />
-              {errors.phoneNumber && <p className="text-red-500 text-sm mt-1">{errors.phoneNumber}</p>}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Pilih Jenis Masalah */}
+              <div>
+                <label className="block text-yellow-400 font-bold mb-2" htmlFor="issueType">
+                  Jenis Masalah <span className="text-red-500">*</span>
+                </label>
+                <select
+                  id="issueType"
+                  name="issueType"
+                  value={formData.issueType}
+                  onChange={handleChange}
+                  className={`w-full bg-[#0d141d] border ${errors.issueType ? "border-red-500" : "border-gray-600"} rounded-lg p-3 text-white focus:outline-none focus:border-yellow-400`}
+                >
+                  <option value="">Pilih Jenis Masalah</option>
+                  {issueTypes.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+                {errors.issueType && <p className="text-red-500 text-sm mt-1">{errors.issueType}</p>}
+              </div>
+
+              {/* Input Tanggal Masalah */}
+              <div>
+                <label className="block text-yellow-400 font-bold mb-2" htmlFor="dateOfIssue">
+                  Tanggal Masalah <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="dateOfIssue"
+                  name="dateOfIssue"
+                  type="date"
+                  value={formData.dateOfIssue}
+                  onChange={handleChange}
+                  className={`w-full bg-[#0d141d] border ${errors.dateOfIssue ? "border-red-500" : "border-gray-600"} rounded-lg p-3 text-white focus:outline-none focus:border-yellow-400`}
+                />
+                {errors.dateOfIssue && <p className="text-red-500 text-sm mt-1">{errors.dateOfIssue}</p>}
+              </div>
             </div>
 
-            {/* Input Game ID */}
-            <div>
-              <label className="block text-yellow-400 font-bold mb-2" htmlFor="gameId">
-                Game ID (opsional)
-              </label>
-              <input
-                id="gameId"
-                name="gameId"
-                type="text"
-                value={formData.gameId}
-                onChange={handleChange}
-                className="w-full bg-[#0d141d] border border-gray-600 rounded-lg p-3 text-white focus:outline-none focus:border-yellow-400"
-                placeholder="Game ID tempat masalah terjadi"
-              />
-            </div>
+              {/* Input Deskripsi Masalah */}
+              <div>
+                <label className="block text-yellow-400 font-bold mb-2" htmlFor="description">
+                  Deskripsi Masalah <span className="text-red-500">*</span>
+                </label>
+                <textarea
+                  id="description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  rows="4"
+                  className={`w-full bg-[#0d141d] border ${errors.description ? "border-red-500" : "border-gray-600"} rounded-lg p-3 text-white focus:outline-none focus:border-yellow-400`}
+                  placeholder="Jelaskan masalah Anda secara detail..."
+                ></textarea>
+                {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description}</p>}
+              </div>
 
-            {/* Pilih Jenis Masalah */}
-            <div>
-              <label className="block text-yellow-400 font-bold mb-2" htmlFor="issueType">
-                Jenis Masalah <span className="text-red-500">*</span>
-              </label>
-              <select
-                id="issueType"
-                name="issueType"
-                value={formData.issueType}
-                onChange={handleChange}
-                className={`w-full bg-[#0d141d] border ${errors.issueType ? "border-red-500" : "border-gray-600"} rounded-lg p-3 text-white focus:outline-none focus:border-yellow-400`}
-              >
-                <option value="">Pilih Jenis Masalah</option>
-                {issueTypes.map((type) => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
-              {errors.issueType && <p className="text-red-500 text-sm mt-1">{errors.issueType}</p>}
-            </div>
-
-            {/* Input Tanggal Masalah */}
-            <div>
-              <label className="block text-yellow-400 font-bold mb-2" htmlFor="dateOfIssue">
-                Tanggal Masalah <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="dateOfIssue"
-                name="dateOfIssue"
-                type="date"
-                value={formData.dateOfIssue}
-                onChange={handleChange}
-                className={`w-full bg-[#0d141d] border ${errors.dateOfIssue ? "border-red-500" : "border-gray-600"} rounded-lg p-3 text-white focus:outline-none focus:border-yellow-400`}
-              />
-              {errors.dateOfIssue && <p className="text-red-500 text-sm mt-1">{errors.dateOfIssue}</p>}
-            </div>
-
-            {/* Input Deskripsi Masalah */}
-            <div>
-              <label className="block text-yellow-400 font-bold mb-2" htmlFor="description">
-                Deskripsi Masalah <span className="text-red-500">*</span>
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                rows="4"
-                className={`w-full bg-[#0d141d] border ${errors.description ? "border-red-500" : "border-gray-600"} rounded-lg p-3 text-white focus:outline-none focus:border-yellow-400`}
-                placeholder="Jelaskan masalah Anda secara detail..."
-              ></textarea>
-              {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description}</p>}
+              <div className="bg-[#0d141d] p-4 rounded-lg border border-yellow-400 border-opacity-30">
+              <div className="flex items-start">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-yellow-400 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div>
+                  <p className="text-sm text-gray-300">
+                  Dengan mengisi formulir ini, masalah Anda akan segera diteruskan ke tim dukungan kami dan akan segera mendapatkan tanggapan.<br/>
+                  Tim kami akan merespon melalui WhatsApp, silakan masukkan nomor WA yang valid.</p>
+                  <p className="text-sm text-gray-300 mt-2">
+                  Keluhan Anda akan diberikan nomor referensi unik untuk pelacakan.
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Tombol Submit */}
@@ -258,6 +280,11 @@ const DirectComplaintForm = () => {
             </div>
           </form>
         )}
+        <div className="mt-8 text-sm text-gray-400 border-t border-gray-700 pt-4">
+          <p className="font-bold text-yellow-400">Butuh Bantuan Segera?</p>
+          <p>Untuk masalah mendesak, silakan hubungi kami langsung melalui Telegram: <a href="https://t.me/lussypena"><span className="text-yellow-400">@lussypena</span></a></p>
+          <p className="mt-2">Bantuan Livechat: 24 Jam → <a href="https://t.ly/livechattt" className="text-yellow-400">Klik disini</a></p>
+        </div>
       </div>
     </div>
   );
