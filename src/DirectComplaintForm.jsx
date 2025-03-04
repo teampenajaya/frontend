@@ -20,7 +20,7 @@ const DirectComplaintForm = () => {
   const [csrfTokenValid, setCsrfTokenValid] = useState(false);
   const [csrfTokenError, setCsrfTokenError] = useState(null);
 
-  const API_BASE_URL = "http://localhost:3001";
+  const API_BASE_URL = process.env.REACT_APP_API_URL;
 
   const issueTypes = ["Deposit/Withdraw Bermasalah", "Masalah Akses Akun", "Masalah Bonus/Promosi", "Kesalahan Proses Pembayaran", "Logout Tiba-tiba", "Masalah Pembayaran Jackpot", "Lainnya"];
 
