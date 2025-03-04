@@ -210,12 +210,6 @@ const DirectComplaintForm = () => {
           </div>
         )}
 
-        {serverErrors && (
-          <div className="bg-red-500 bg-opacity-20 border border-red-500 text-red-400 px-4 py-3 rounded mb-4">
-            <p>{serverErrors}</p>
-          </div>
-        )}
-
         {isSubmitted ? (
           <div className="text-center py-8">
             <div className="w-16 h-16 bg-green-500 rounded-full mx-auto flex items-center justify-center mb-4">
@@ -393,6 +387,12 @@ const DirectComplaintForm = () => {
                 </div>
               </div>
             </div>
+
+            {serverErrors && (
+              <div className="bg-red-500 bg-opacity-20 border border-red-500 text-red-400 px-4 py-3 rounded mb-4">
+                <p>{serverErrors}</p>
+              </div>
+            )}
 
             {/* Submit Button */}
             <div className="mt-6">
