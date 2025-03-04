@@ -44,7 +44,7 @@ const Block = ()=> {
         }
       });
       
-      console.log("%请勿模仿! 请勿打扰！每天晚上10点软件被关了", "background-color: red; color: white; font-size: 18px; font-weight: bold; padding: 15px; border: 3px solid black; border-radius: 10px;");      
+      console.log("%cPeringatan! Penyalinan kode ini tanpa izin akan dilaporkan!", "background-color: red; color: white; font-size: 18px; font-weight: bold; padding: 15px; border: 3px solid black; border-radius: 10px;");      
 }
 
 export default Block
